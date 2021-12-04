@@ -23,7 +23,7 @@ public class SqlSessionFactoryBuilder {
         // 2、创建SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
 
-        return null;
+        return sqlSessionFactory;
     }
 
 }

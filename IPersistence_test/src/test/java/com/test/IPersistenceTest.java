@@ -19,8 +19,8 @@ public class IPersistenceTest {
         IUserDao userDao = new UserDaoImpl();
 
         User user = new User();
-        user.setId(2);
-        user.setUsername("张月");
+        user.setId(1);
+        user.setUsername("tyw");
         User user2 = userDao.findByCondition(user);
         System.out.println(user2);
 

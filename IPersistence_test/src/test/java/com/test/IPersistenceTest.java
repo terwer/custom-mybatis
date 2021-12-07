@@ -12,12 +12,25 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * 完善：请完善自定义持久层框架IPersistence，在现有代码基础上添加、修改及删除功能。
+ *
+ * 题目分析
+ * 实现思路
+ * 代码讲解
+ */
+
+/**
  * @author terwer
  * @Description
  * @create 2021-12-01 00:26
  */
 public class IPersistenceTest {
 
+    /**
+     * 根据条件查询单个
+     *
+     * @throws Exception
+     */
     @Test
     public void test() throws Exception {
         InputStream resourceAsStream = Resources.getResourceAsStream("sqlMapConfig.xml");
@@ -32,6 +45,11 @@ public class IPersistenceTest {
         System.out.println(user);
     }
 
+    /**
+     * 查询所有
+     *
+     * @throws Exception
+     */
     @Test
     public void test2() throws Exception {
         InputStream resourceAsStream = Resources.getResourceAsStream("sqlMapConfig.xml");

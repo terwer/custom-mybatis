@@ -9,4 +9,15 @@
         select * from user where id = #{id} and username = #{username}
     </select>
 
+    <insert id="addUser" resultType="java.lang.Boolean" parameterType="com.test.pojo.User">
+        insert into user values(#{id}, #{username})
+    </insert>
+
+    <update id="updateUser" resultType="java.lang.Boolean" parameterType="com.test.pojo.User">
+        update user set username=#{username} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" resultType="java.lang.Boolean" parameterType="com.test.pojo.User">
+        delete from user where id=#{id}
+    </delete>
 </mapper>

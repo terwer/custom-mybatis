@@ -8,6 +8,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,13 @@ public class XmlMapperBuilder {
         // <mapper>
         Element rootElement = document.getRootElement();
 
-        List<Element> list = rootElement.selectNodes("//select");
+        // 这里只实现了select标签，还需要解析其他标签
+        List<String> tags = new ArrayList<>();
+        tags.add("select");
+        tags.add("insert");
+        tags.add("update");
+        tags.add("delete");
+        List<Element> list = getElementList(rootElement, tags);// rootElement.selectNodes("//select");
 
         String namespace = rootElement.attributeValue("namespace");
 
@@ -49,4 +56,18 @@ public class XmlMapperBuilder {
         }
 
     }
+
+    // 这里封装一下
+    private List<Element> getElementList(Element rootElement, List<String> tags) {
+        // 这里只实现了select标签，还需要解析其他标签
+        List<Element> list = new ArrayList<>();
+
+        for (String tag : tags) {
+            List<Element> item = rootElement.selectNodes("//" + tag);
+            list.addAll(item);
+        }
+
+        return list;
+    }
+
 }

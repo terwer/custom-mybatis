@@ -14,5 +14,11 @@ public interface SqlSession {
 
     public <T> T selectOne(String statementId, Object... params) throws Exception;
 
+    public boolean add(String statementId, Object... params) throws Exception;
+
+    public boolean update(String statementId, Object... params) throws Exception;
+
+    public boolean delete(String statementId, Object... params) throws Exception;
+
     <T> T getMapper(Class<?> mapperClass);
 }

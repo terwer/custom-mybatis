@@ -14,14 +14,14 @@ import java.io.InputStream;
  */
 public class SqlSessionFactoryBuilder {
 
-    public SqlSessionFactory build(InputStream in) throws DocumentException, PropertyVetoException {
+    public com.test.sqlsession.SqlSessionFactory build(InputStream in) throws DocumentException, PropertyVetoException {
 
         // 1、使用dom4j解析文件，将解析的内容封装到configuration中
         XmlConfigBuilder xmlConfigBuilder = new XmlConfigBuilder();
         Configuration configuration = xmlConfigBuilder.parseConfig(in);
 
         // 2、创建SqlSessionFactory
-        SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(configuration);
+        com.test.sqlsession.SqlSessionFactory sqlSessionFactory = new com.test.sqlsession.DefaultSqlSessionFactory(configuration);
 
         return sqlSessionFactory;
     }

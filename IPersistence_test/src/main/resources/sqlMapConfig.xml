@@ -9,8 +9,5 @@
     </dataSource>
 
     <!-- 存放UserMapper.xml全路径 -->
-    <mapper resource="UserMapper2.xml"></mapper>
-    <!--
     <mapper resource="UserMapper.xml"></mapper>
-    -->
 </configuration>

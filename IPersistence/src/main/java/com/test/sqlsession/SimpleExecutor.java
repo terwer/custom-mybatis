@@ -75,6 +75,43 @@ public class SimpleExecutor implements Executor {
         return (List<E>) objects;
     }
 
+    @Override
+    public boolean execute(Configuration configuration, MappedStatement mappedStatement, Object... params) throws Exception {
+        // 注册驱动
+        Connection connection = configuration.getDataSource().getConnection();
+
+        // 获取sql语句
+        // 转换sql
+        String sql = mappedStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+
+        // 获取预处理对象
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+
+        // 设置参数
+        // 获取参数类型
+        String parameterType = mappedStatement.getParameterType();
+        Class<?> parameterTypeClass = getClassType(parameterType);
+
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        for (int i = 0; i < parameterMappingList.size(); i++) {
+            ParameterMapping parameterMapping = parameterMappingList.get(i);
+            String content = parameterMapping.getContent();
+
+            // 反射设置参数
+            Field declaredField = parameterTypeClass.getDeclaredField(content);
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(params[0]);
+
+            preparedStatement.setObject(i + 1, o);
+        }
+
+        // 执行sql
+       boolean result = preparedStatement.execute();
+
+       return result;
+    }
+
     private Class<?> getClassType(String parameterType) throws ClassNotFoundException {
         if (parameterType != null) {
             Class<?> aClass = Class.forName(parameterType);

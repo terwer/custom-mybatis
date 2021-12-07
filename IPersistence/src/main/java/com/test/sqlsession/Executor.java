@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface Executor {
     public <E> List<E> query(Configuration configuration, MappedStatement mappedStatement,Object... params) throws Exception;
+
+    public boolean execute(Configuration configuration, MappedStatement mappedStatement, Object... params) throws Exception;
 }

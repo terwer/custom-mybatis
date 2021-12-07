@@ -41,6 +41,36 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     @Override
+    public boolean add(String statementId, Object... params) throws Exception{
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        boolean result = simpleExecutor.execute(configuration,mappedStatement,params);
+
+        return result;
+    }
+
+    @Override
+    public boolean update(String statementId, Object... params) throws Exception {
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        boolean result = simpleExecutor.execute(configuration,mappedStatement,params);
+
+        return result;
+    }
+
+    @Override
+    public boolean delete(String statementId, Object... params) throws Exception {
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        boolean result = simpleExecutor.execute(configuration,mappedStatement,params);
+
+        return result;
+    }
+
+    @Override
     public <T> T getMapper(Class<?> mapperClass) {
 
         // 使用JDK动态态代理为DAO生成代理对象并返回
@@ -53,13 +83,31 @@ public class DefaultSqlSession implements SqlSession {
 
                 String statementId = className + "." + methodName;
 
-                Type genericReturnType = method.getGenericReturnType();
-                if (genericReturnType instanceof ParameterizedType) {
-                    List<Object> objects = selectList(statementId, args);
-                    return objects;
-                } else {
-                    Object object = selectOne(statementId, args);
+                // 这里的思路是根据方法名称来判断是执行的那个方法
+                if(methodName.contains("find")){// 这是之前的查询
+                    Type genericReturnType = method.getGenericReturnType();
+                    if (genericReturnType instanceof ParameterizedType) {
+                        List<Object> objects = selectList(statementId, args);
+                        return objects;
+                    } else {
+                        Object object = selectOne(statementId, args);
+                        return object;
+                    }
+                }else if(methodName.contains("add")){
+                    // 进行add的具体实现
+                    Object object = add(statementId, args);
+                    return  object;
+
+                }else if(methodName.contains("update")){
+                    // 进行add的具体实现
+                    Object object = update(statementId, args);
                     return object;
+                }else if(methodName.contains("delete")){
+                    // 进行add的具体实现
+                    Object object = delete(statementId, args);
+                    return object;
+                }else{
+                    return null;
                 }
             }
         });

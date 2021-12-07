@@ -1,11 +1,11 @@
-<mapper namespace="com.test.dao.IUserDao">
+<mapper namespace="user">
 
     <!-- sql的唯一标识 namespace.id组成 -->
-    <select id="findAll" resultType="com.test.pojo.User">
+    <select id="selectList" resultType="com.test.pojo.User">
         select * from user
     </select>
 
-    <select id="findByCondition" resultType="com.test.pojo.User" parameterType="com.test.pojo.User">
+    <select id="selectOne" resultType="com.test.pojo.User" parameterType="com.test.pojo.User">
         select * from user where id = #{id} and username = #{username}
     </select>
 

@@ -29,10 +29,17 @@ public class IPersistenceTest {
         User user = new User();
         user.setId(1);
         user.setUsername("唐有炜");
+        System.out.println(user);
+    }
 
-        User user2 = userDao.findByCondition(user);
-        System.out.println(user2);
+    @Test
+    public void test2() throws Exception {
+        InputStream resourceAsStream = Resources.getResourceAsStream("sqlMapConfig.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
 
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
         List<User> users = userDao.findAll();
 
         for (User user3 : users) {
